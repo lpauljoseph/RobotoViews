@@ -1,0 +1,61 @@
+<ScrollView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:textStyle="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="thin"
+                android:textStyle="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="thin_italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="light"
+                android:textStyle="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="light_italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="regular"
+                android:textStyle="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="medium"
+                android:textStyle="italic"/>
+
+        <com.pjcorp.robotoview.view.TextView
+                style="@style/text"
+                android:text="roboto ROBOTO mM iI"
+                android:fontFamily="medium_italic"/>
+
+    </LinearLayout>
+</ScrollView>
