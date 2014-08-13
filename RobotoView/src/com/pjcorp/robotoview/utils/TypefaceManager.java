@@ -1,14 +1,10 @@
 package com.pjcorp.robotoview.utils;
 
-import android.R;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Typeface;
 import android.util.AttributeSet;
 import android.util.SparseArray;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 /**
  * Manager to create the typeface matching the couple style and family font
@@ -16,8 +12,9 @@ import java.util.regex.Pattern;
 public class TypefaceManager {
 
     private static final SparseArray<Typeface> TYPEFACE_SPARSE_ARRAY = new SparseArray<Typeface>();
-    private static final int [] ATTRIBUTE_FONT_FAMILY = new int[]{R.attr.fontFamily};
-    private static final int [] ATTRIBUTE_TEXT_STYLE = new int[]{R.attr.textStyle};
+    private static final int [] ATTRIBUTE_FONT_FAMILY = new int[]{android.R.attr.fontFamily};
+    private static final int [] ATTRIBUTE_TEXT_STYLE = new int[]{android.R.attr.textStyle};
+	private static final int [] ATTRIBUTE_TEXT_VIEW_STYLE = new int[]{android.R.attr.textViewStyle};
 
     /**
      * Getter for Typeface
@@ -25,14 +22,24 @@ public class TypefaceManager {
      */
     public static Typeface getTypeface(Context context, AttributeSet attrs, int defStyle)throws IllegalArgumentException {
         Typeface typeface = null;
-        TypedArray value = context.obtainStyledAttributes(attrs, TypefaceManager.ATTRIBUTE_FONT_FAMILY, defStyle, 0);
-        String fontFamilyString = value.getString(0);
+		String fontFamilyString = null;
+
+        TypedArray value = context.obtainStyledAttributes(attrs, ATTRIBUTE_FONT_FAMILY, defStyle, 0);
+		if(value != null){
+			fontFamilyString = value.getString(0);
+			if(fontFamilyString == null){
+				fontFamilyString = obtainFontFamilyFromTextViewStyle(context, attrs);
+			}
+			value.recycle();
+		}
         MyTypeface myTypeface = MyTypeface.getTypeface(fontFamilyString);
-        value.recycle();
         if(myTypeface != null){
-            value = context.obtainStyledAttributes(attrs, TypefaceManager.ATTRIBUTE_TEXT_STYLE, defStyle, 0);
-            int textStyle = value.getInt(0, 0);
-            value.recycle();
+            value = context.obtainStyledAttributes(attrs, ATTRIBUTE_TEXT_STYLE, defStyle, 0);
+			int textStyle = 0;
+			if(value != null){
+				textStyle = value.getInt(0, 0);
+				value.recycle();
+			}
             myTypeface = MyTypeface.getTypeface(myTypeface, textStyle);
             typeface = TYPEFACE_SPARSE_ARRAY.get(myTypeface.mId);
             if (typeface == null) {
@@ -42,6 +49,21 @@ public class TypefaceManager {
         }
         return typeface;
     }
+
+	private static String obtainFontFamilyFromTextViewStyle(Context context, AttributeSet attrs){
+		TypedArray valueTextViewStyle = context.obtainStyledAttributes(attrs, ATTRIBUTE_TEXT_VIEW_STYLE);
+
+		if(valueTextViewStyle != null){
+			int styleId = valueTextViewStyle.getResourceId(0, -1);
+			if(styleId != -1){
+				TypedArray value = context.obtainStyledAttributes(styleId, ATTRIBUTE_FONT_FAMILY);
+				if(value != null){
+					return value.getString(0);
+				}
+			}
+		}
+		return null;
+	}
 
     private static Typeface createTypeface(Context context, int typefaceValue){
         Typeface typeface = null;
